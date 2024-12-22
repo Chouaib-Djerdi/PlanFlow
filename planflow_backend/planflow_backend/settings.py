@@ -21,13 +21,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ.get(
+    "SECRET_KEY",
+    default="django-insecure-lq-il%99@7n*wr(l6o-&x99&bmfd5z)n!$mv-+jo4m%xb98k^o",
+)
 
 DEBUG = bool(os.environ.get("DEBUG", default=0))
 
 # 'DJANGO_ALLOWED_HOSTS' should be a single string of hosts with a space between each.
 # For example: 'DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]'
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "0.0.0.0"]
 
 
 # Application definition
@@ -50,6 +53,8 @@ INSTALLED_APPS = [
     # dj-rest-auth
     "dj_rest_auth",
     "dj_rest_auth.registration",
+    # Local apps
+    "projects",
 ]
 
 SITE_ID = 1
@@ -58,6 +63,13 @@ AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",  # Django's default
     "allauth.account.auth_backends.AuthenticationBackend",  # OAuth
 ]
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
+    ],
+}
+
 
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
@@ -162,3 +174,6 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Do not require email verification
 ACCOUNT_EMAIL_VERIFICATION = "none"
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")

@@ -49,7 +49,7 @@ function Layout() {
             path="/edit-project/:id"
             element={
               <ProtectedRoute>
-                <CreateProject />
+                <CreateProject edit />
               </ProtectedRoute>
             }
           />

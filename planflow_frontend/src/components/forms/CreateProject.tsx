@@ -32,19 +32,22 @@ import { Input } from "@/components/ui/input";
 import { projectSchema } from "@/lib/validations";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useApi } from "@/hooks/useApi";
 import { priority, status } from "@/lib/constants";
 
-export function CreateProject() {
+export function CreateProject({ edit = false }) {
   const navigate = useNavigate();
   const { fetchWithAuth } = useApi();
+  const { id } = useParams(); // Assuming we pass `projectId` via the URL
+  const [isLoading, setIsLoading] = useState(false);
 
   const [date, setDate] = useState<DateRange | undefined>({
     from: new Date(Date.now()),
     to: addDays(new Date(Date.now()), 7),
   });
+
   // ...
   // 1. Define your form.
   const form = useForm<z.infer<typeof projectSchema>>({
@@ -60,30 +63,83 @@ export function CreateProject() {
     },
   });
 
+  // Fetch project data in edit mode
+  useEffect(() => {
+    if (edit && id) {
+      setIsLoading(true);
+      fetchWithAuth(`/projects/${id}/`)
+        .then((response) => {
+          if (response) {
+            const {
+              title,
+              description,
+              start_date,
+              end_date,
+              priority,
+              category,
+              status,
+            } = response;
+            setDate({
+              from: new Date(start_date),
+              to: new Date(end_date),
+            });
+            form.reset({
+              title,
+              description,
+              start_date,
+              end_date,
+              priority,
+              category,
+              status,
+            });
+          }
+        })
+        .catch((error) => console.error("Failed to fetch project data", error))
+        .finally(() => setIsLoading(false));
+    }
+  }, [id]);
+
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof projectSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
     try {
-      const response = await fetchWithAuth("/projects/", {
-        method: "POST",
+      const url = edit
+        ? `/projects/${id}/` // Update project endpoint
+        : "/projects/"; // Create project endpoint
+      const method = edit ? "PUT" : "POST";
+
+      const response = await fetchWithAuth(url, {
+        method,
         body: values,
       });
+
       if (response) {
         console.log(response);
         navigate("/");
       } else {
-        console.error("Project creation failed");
+        console.error(
+          edit ? "Project update failed" : "Project creation failed"
+        );
       }
     } catch (error) {
-      console.error("Failed to create project", error);
+      console.error(
+        edit ? "Failed to update project" : "Failed to create project",
+        error
+      );
     }
+  }
+
+  if (isLoading) {
+    return <p>Loading...</p>; // Optionally replace with a spinner
   }
   return (
     <Form {...form}>
       <div className="space-y-8">
-        <h1 className="text-4xl font-bold">Create a Project</h1>
+        <h1 className="text-4xl font-bold">
+          {edit ? "Edit Project" : "Create a Project"}
+        </h1>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="grid grid-cols-2 gap-4"
@@ -223,7 +279,7 @@ export function CreateProject() {
           />
 
           <Button type="submit" className="col-span-2">
-            Submit
+            {edit ? "Update Project" : "Create Project"}
           </Button>
         </form>
       </div>

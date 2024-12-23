@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { SignUp } from "./components/forms/SignUp";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import { AuthProvider } from "./context/AuthProvider";
+import { SignIn } from "./components/forms/SignIn";
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
               }
             />
             <Route path="/sign-up" element={<SignUp />} />
+            <Route path="/sign-in" element={<SignIn />} />
           </Routes>
         </div>
       </BrowserRouter>

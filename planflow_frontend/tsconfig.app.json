@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
     // ...
+    "jsx": "preserve", // react component error resolve
+    "esModuleInterop": true, // path import error resolve
+    "allowImportingTsExtensions": true, // path import error resolve
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     }
     // ...
   }

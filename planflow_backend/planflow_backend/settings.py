@@ -55,9 +55,14 @@ INSTALLED_APPS = [
     "dj_rest_auth.registration",
     # Local apps
     "projects",
+    "corsheaders",
 ]
 
 SITE_ID = 1
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8080",
+]
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",  # Django's default
@@ -98,6 +103,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = "planflow_backend.urls"

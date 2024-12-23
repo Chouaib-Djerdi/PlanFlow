@@ -6,7 +6,7 @@ import { SignIn } from "./components/forms/SignIn";
 import Navbar from "./components/shared/Navbar";
 import Dashboard from "./components/pages/Dashboard";
 import { CreateProject } from "./components/forms/CreateProject";
-
+import ProjectDetails from "./components/pages/ProjectDetails";
 
 function App() {
   return (
@@ -27,7 +27,7 @@ function Layout() {
   return (
     <>
       {!noNavbarRoutes.includes(location.pathname) && <Navbar />}
-      <div className="flex flex-col items-center h-screen max-w-3xl mx-auto">
+      <div className="flex flex-col items-center h-screen max-w-3xl mx-auto mt-4">
         <Routes>
           <Route
             path="/"
@@ -42,6 +42,22 @@ function Layout() {
             element={
               <ProtectedRoute>
                 <CreateProject />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/edit-project/:id"
+            element={
+              <ProtectedRoute>
+                <CreateProject />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/projects/:id"
+            element={
+              <ProtectedRoute>
+                <ProjectDetails />
               </ProtectedRoute>
             }
           />

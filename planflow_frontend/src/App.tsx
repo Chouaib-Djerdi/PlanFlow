@@ -27,7 +27,7 @@ function Layout() {
   return (
     <>
       {!noNavbarRoutes.includes(location.pathname) && <Navbar />}
-      <div className="flex flex-col items-center justify-center h-screen max-w-3xl mx-auto">
+      <div className="flex flex-col items-center h-screen max-w-3xl mx-auto">
         <Routes>
           <Route
             path="/"

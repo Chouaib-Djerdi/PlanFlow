@@ -3,11 +3,11 @@ import axios from "axios";
 
 export const useApi = () => {
   const { token } = useAuth();
-
+  const baseUrl = "http://localhost:8000/api";
   const fetchWithAuth = async (url: string, options: any = {}) => {
     try {
       const response = await axios({
-        url,
+        url: `${baseUrl}${url}`,
         method: options.method || "GET",
         headers: {
           ...options.headers,

@@ -7,5 +7,5 @@ export default function ProtectedRoute({
   children: JSX.Element;
 }) {
   const { isAuthenticated } = useAuth();
-  return isAuthenticated ? children : <Navigate to="/sign-up" />;
+  return isAuthenticated ? children : <Navigate to="/sign-in" />;
 }

@@ -37,6 +37,16 @@ const ProjectDetails = () => {
       console.error("Failed to delete project", error);
     }
   }
+  async function handleExport() {
+    try {
+      const blob = await fetchWithAuth(`/projects/${id}/export_pdf/`, {}, true); // Set raw to true
+      const url = window.URL.createObjectURL(blob); // Create a URL for the blob
+      window.open(url, "_blank"); // Open the file in a new tab
+      window.URL.revokeObjectURL(url); // Revoke the URL after it's opened
+    } catch (error) {
+      console.error("Failed to export PDF", error);
+    }
+  }
 
   if (!project) {
     return <div>Loading...</div>;
@@ -44,7 +54,9 @@ const ProjectDetails = () => {
   return (
     <div className="flex flex-col gap-8">
       <div className="flex gap-2 justify-end">
-        <Button variant="secondary">Export PDF</Button>
+        <Button variant="secondary" onClick={handleExport}>
+          Export PDF
+        </Button>
         <Link to={`/edit-project/${project.id}`}>
           <Button variant="outline">Edit</Button>
         </Link>

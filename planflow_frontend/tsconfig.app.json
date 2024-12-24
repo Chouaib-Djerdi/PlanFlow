@@ -4,6 +4,7 @@
     "jsx": "preserve", // react component error resolve
     "esModuleInterop": true, // path import error resolve
     "allowImportingTsExtensions": true, // path import error resolve
+    "noEmit": true, // required for allowImportingTsExtensions
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]

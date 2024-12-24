@@ -12,7 +12,7 @@ export default function Dashboard() {
     fetchWithAuth("/projects/").then((data) => {
       setProjects(data);
     });
-  }, [fetchWithAuth]);
+  }, []);
 
   if (!projects) {
     return <div>Loading...</div>;

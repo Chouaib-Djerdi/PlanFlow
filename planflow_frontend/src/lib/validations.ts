@@ -15,7 +15,7 @@ export const signInSchema = z.object({
 
 export const projectSchema = z.object({
   title: z.string().min(2).max(255),
-  description: z.string().min(2).max(255),
+  description: z.string().min(2),
   start_date: z.string().min(10),
   end_date: z.string().min(10),
   priority: z.enum(["high", "medium", "low"]),

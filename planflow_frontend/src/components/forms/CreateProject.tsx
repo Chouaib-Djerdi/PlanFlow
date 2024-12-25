@@ -48,6 +48,8 @@ export function CreateProject({ edit = false }) {
     to: addDays(new Date(Date.now()), 7),
   });
 
+  const [isGenerating, setIsGenerating] = useState(false);
+
   // ...
   // 1. Define your form.
   const form = useForm<z.infer<typeof projectSchema>>({
@@ -98,6 +100,36 @@ export function CreateProject({ edit = false }) {
         .finally(() => setIsLoading(false));
     }
   }, [id]);
+
+  async function generateDescription(title: string) {
+    if (!title) {
+      alert("Please enter a title to generate a description.");
+      return;
+    }
+
+    setIsGenerating(true);
+
+    try {
+      const response = await fetchWithAuth("/projects/generate-description/", {
+        method: "POST",
+        body: { title: title },
+      });
+
+      console.log("Response Object:", response);
+
+      if (response && response.description) {
+        form.setValue("description", response.description);
+      } else {
+        console.error("Failed to generate description:", response);
+        alert("Could not generate a description. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error calling API:", error);
+      alert("An error occurred while generating the description.");
+    } finally {
+      setIsGenerating(false);
+    }
+  }
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof projectSchema>) {
@@ -164,12 +196,41 @@ export function CreateProject({ edit = false }) {
               <FormItem className="col-span-2">
                 <FormLabel>Description</FormLabel>
                 <FormControl>
-                  <Textarea placeholder="Hmmmm..." {...field} />
+                  <div className="flex gap-2">
+                    <Textarea
+                      placeholder="Hmmmm..."
+                      {...field}
+                      disabled={isGenerating}
+                    />
+                    <Button
+                      type="button"
+                      onClick={() =>
+                        generateDescription(form.getValues("title"))
+                      }
+                      disabled={isGenerating}
+                    >
+                      {isGenerating ? "Generating..." : "Generate"}
+                    </Button>
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+
+          {/* <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem className="col-span-2">
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Textarea placeholder="Hmmmm..." {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          /> */}
           <div className={cn("grid gap-2")}>
             <Popover>
               <PopoverTrigger asChild>

@@ -17,6 +17,9 @@ export default function Dashboard() {
   if (!projects) {
     return <div>Loading...</div>;
   }
+  if (projects.length === 0) {
+    return <div>No projects found</div>;
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">

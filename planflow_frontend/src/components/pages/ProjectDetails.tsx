@@ -80,6 +80,26 @@ const ProjectDetails = () => {
           </DialogContent>
         </Dialog>
       </div>
+      {
+        // Display images if they exist
+        project.image1 && (
+          <img
+            src={project.image1}
+            alt="Project Image 1"
+            className="w-full h-40 object-cover rounded-md"
+          />
+        )
+      }
+      {
+        // Display images if they exist
+        project.image2 && (
+          <img
+            src={project.image2}
+            alt="Project Image 2"
+            className="w-full h-40 object-cover rounded-md"
+          />
+        )
+      }
       <h1 className="text-4xl font-bold">{project.title}</h1>
       <div>
         <p>

@@ -21,4 +21,6 @@ export const projectSchema = z.object({
   priority: z.enum(["high", "medium", "low"]),
   category: z.string().min(2).max(50),
   status: z.enum(["not_started", "in_progress", "completed"]),
+  image1: z.any().optional(),
+  image2: z.any().optional(),
 });

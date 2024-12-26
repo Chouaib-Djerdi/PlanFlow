@@ -8,7 +8,10 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "moduleResolution": "bundler", // update module resolution
+    "module": "ESNext", // set module to NodeNext
+    "target": "ES5" // update target to ES2015
     // ...
   }
 }

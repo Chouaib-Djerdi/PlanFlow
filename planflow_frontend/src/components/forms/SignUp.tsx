@@ -34,7 +34,6 @@ export function SignUp() {
   async function onSubmit(values: z.infer<typeof signUpSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values);
     try {
       const response = await fetch(
         "http://localhost:8000/api/auth/registration/",

@@ -1,13 +1,16 @@
 import { CardProps } from "@/types";
 
-export default function ProjectCard({ title }: CardProps) {
+export default function ProjectCard({ title, imgURL }: CardProps) {
   return (
     <div className="max-w-sm rounded shadow-lg bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out h-full">
-      <div className="w-full">
+      <div className="w-full h-48 overflow-hidden">
         <img
-          src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
+          src={
+            imgURL ||
+            "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
+          }
           alt={title}
-          className="rounded-t"
+          className="w-full h-full object-cover rounded-t"
         />
       </div>
       <div className="px-6 py-4">

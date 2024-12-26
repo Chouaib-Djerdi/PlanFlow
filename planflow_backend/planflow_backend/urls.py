@@ -30,7 +30,4 @@ urlpatterns = [
     # Google OAuth login
     path("api/auth/social/", include("allauth.socialaccount.urls")),
     path("api/", include("projects.urls")),
-]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

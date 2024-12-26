@@ -4,6 +4,9 @@ WORKDIR /app
 
 COPY package.json .
 
+RUN npm cache clean --force && \
+    rm -rf node_modules
+
 RUN npm install
 
 RUN npm i -g serve

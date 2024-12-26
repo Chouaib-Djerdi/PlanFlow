@@ -20,6 +20,7 @@ export function SignUp() {
   const navigate = useNavigate();
   const { login } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   // ...
   // 1. Define your form.
   const form = useForm<z.infer<typeof signUpSchema>>({
@@ -38,16 +39,13 @@ export function SignUp() {
     // ✅ This will be type-safe and validated.
     try {
       setIsLoading(true);
-      const response = await fetch(
-        "https://planflowapi.onrender.com/api/auth/registration/",
-        {
-          method: "POST",
-          body: JSON.stringify(values),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${BASE_URL}/api/auth/registration/`, {
+        method: "POST",
+        body: JSON.stringify(values),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       if (response.ok) {
         const data = await response.json();

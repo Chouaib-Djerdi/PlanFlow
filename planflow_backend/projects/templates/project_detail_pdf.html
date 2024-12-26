@@ -19,17 +19,6 @@
         font-weight: bold;
         margin: 0;
       }
-      .images {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
-      .images img {
-        width: 100%;
-        height: 160px;
-        object-fit: cover;
-        border-radius: 8px;
-      }
       .details {
         display: flex;
         flex-direction: column;
@@ -50,13 +39,6 @@
   </head>
   <body>
     <div class="container">
-      <div class="images">
-        {% if project.image1 %}
-        <img src="{{ project.image1.url }}" alt="Project Image 1" />
-        {% endif %} {% if project.image2 %}
-        <img src="{{ project.image2.url }}" alt="Project Image 2" />
-        {% endif %}
-      </div>
       <h1>{{ project.title }}</h1>
       <div class="details">
         <p><span>Start Date:</span> {{ project.start_date }}</p>

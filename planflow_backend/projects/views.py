@@ -27,9 +27,12 @@ class ProjectViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=["get"])
     def export_pdf(self, request, pk=None):
         project = self.get_object()
-        print(project)
         template = get_template("project_detail_pdf.html")
-        html = template.render({"project": project})
+        html = template.render(
+            {
+                "project": project,
+            }
+        )
 
         response = HttpResponse(content_type="application/pdf")
         response["Content-Disposition"] = (

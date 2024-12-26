@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const useApi = () => {
   const { token } = useAuth();
-  const baseUrl = "https://planflowapi.onrender.com/api";
+  const baseUrl = `${import.meta.env.VITE_API_BASE_URL}/api`;
   const fetchWithAuth = async (url: string, options: any = {}, raw = false) => {
     try {
       const response = await axios({

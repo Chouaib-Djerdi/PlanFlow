@@ -36,7 +36,7 @@ export function SignUp() {
     // ✅ This will be type-safe and validated.
     try {
       const response = await fetch(
-        "http://localhost:8000/api/auth/registration/",
+        "https://planflowapi.onrender.com/api/auth/registration/",
         {
           method: "POST",
           body: JSON.stringify(values),

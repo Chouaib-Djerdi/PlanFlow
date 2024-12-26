@@ -34,13 +34,16 @@ export function SignIn() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     try {
-      const response = await fetch("http://localhost:8000/api/auth/login/", {
-        method: "POST",
-        body: JSON.stringify(values),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        "https://planflowapi.onrender.com/api/auth/login/",
+        {
+          method: "POST",
+          body: JSON.stringify(values),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();

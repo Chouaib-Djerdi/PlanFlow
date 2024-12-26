@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const useApi = () => {
   const { token } = useAuth();
-  const baseUrl = "http://localhost:8000/api";
+  const baseUrl = "https://planflowapi.onrender.com/api";
   const fetchWithAuth = async (url: string, options: any = {}, raw = false) => {
     try {
       const response = await axios({

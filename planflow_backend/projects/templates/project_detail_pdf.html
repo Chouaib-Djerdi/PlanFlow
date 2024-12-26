@@ -1,4 +1,4 @@
-{% load static %}
+{% load media %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -53,10 +53,9 @@
     <div class="container">
       <div class="images">
         {% if project.image1 %}
-        <img src="{% static project.image1 %}" alt="Project Image 1" />
-        {% endif %} 
-        {% if project.image2 %}
-        <img src="{% static project.image2 %}" alt="Project Image 2" />
+        <img src="{{ project.image1.url }}" alt="Project Image 1" />
+        {% endif %} {% if project.image2 %}
+        <img src="{{ project.image2.url }}" alt="Project Image 2" />
         {% endif %}
       </div>
       <h1>{{ project.title }}</h1>

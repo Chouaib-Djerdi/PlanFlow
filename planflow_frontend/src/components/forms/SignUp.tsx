@@ -14,10 +14,12 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { useState } from "react";
 
 export function SignUp() {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
   // ...
   // 1. Define your form.
   const form = useForm<z.infer<typeof signUpSchema>>({
@@ -35,6 +37,7 @@ export function SignUp() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     try {
+      setIsLoading(true);
       const response = await fetch(
         "https://planflowapi.onrender.com/api/auth/registration/",
         {
@@ -55,6 +58,8 @@ export function SignUp() {
       }
     } catch (error) {
       console.error("API call failed", error);
+    } finally {
+      setIsLoading(false); // Reset loading state
     }
   }
   return (
@@ -115,7 +120,7 @@ export function SignUp() {
             )}
           />
           <Button type="submit" className="w-full">
-            Sign Up
+            {isLoading ? "Registering..." : "Register"}
           </Button>
           <p>
             Already have an account ?{" "}
